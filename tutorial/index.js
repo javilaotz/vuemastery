@@ -1,6 +1,7 @@
 var app = new Vue({
   el: "#app",
   data: {
+    brand: 'vueMastery',
     product: 'Vue Socks',
     description: 'Socks world of warcraft horde theme',
     image: './images/green_socks.png',
@@ -44,6 +45,11 @@ var app = new Vue({
     },
     updateProduct: function (image) {
       this.image = image;
+    }
+  },
+  computed: {
+    title(){
+      return `${this.brand} | ${this.product} ${this.onSale && 'On SALE!'}`;
     }
   }
 })

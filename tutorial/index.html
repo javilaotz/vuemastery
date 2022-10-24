@@ -17,7 +17,7 @@
         <button v-on:click="addToCart">Add to Cart</button>
       </div>
       <div class="product-info">
-        <h1>{{ product }}  <span v-show="onSale">On SALE!!</span></h1>
+        <h1>{{ title }}</h1>
         <p>{{ description }}</p>
 
         <p :class="styles.stockStatus " v-if="inventory > 10">In Stock</p>
