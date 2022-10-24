@@ -33,8 +33,8 @@
         <div class="boxContainer">
           <div 
             class="box variant" 
-            @mouseover="updateProduct(variant.variantImage)"
-            v-for="variant in variants" :key="variant.variantId"
+            v-for="(variant, index) in variants" :key="variant.variantId"
+            @mouseover="updateProduct(index)"
             :style="{ backgroundColor: variant.variantColor }"
           >
           </div>
