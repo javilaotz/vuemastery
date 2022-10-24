@@ -53,3 +53,28 @@
 .cartContainer button {
   margin-right: 20px;
 }
+
+.success { 
+  background-color: #0c5a0c;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.warning { 
+  background-color: #b5c314;
+  color: #000000;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.danger { 
+  background-color: #7a0606;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.lineThrough {
+  text-decoration: line-through;
+}
