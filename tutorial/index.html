@@ -37,6 +37,11 @@
           <div class="size" v-for="size in sizes">{{ size }}</div>
         </div>
 
+        <div class="cartContainer">
+          <button v-on:click="cart += 1">Add to Cart</button>
+          <div>cart: {{ cart }}</div>
+        </div>
+
         
       </div>
     </div>
