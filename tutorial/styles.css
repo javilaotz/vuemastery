@@ -2,22 +2,44 @@
   display: flex;
 }
 
+.product-image {
+  display: flex;
+  flex-direction: column;
+}
+
 .w200{
   width: 200px;
 }
 
-.sizeContainer {
+.boxContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.size {
+.box {
   width: 30px;
   border: dotted 0.1px gray;
   text-align: center;
   cursor: pointer;
 }
+
+.variant {
+  width: 100px;
+}
+
+.cart {
+  border:none;
+  width: auto;
+  text-align: start;
+  margin-right: 20px;
+}
+
+.amountButtons {
+  border:none;
+  width: 100px;
+}
+
 
 .cartContainer {
   margin-top: 20px;

@@ -13,6 +13,7 @@
     <div class="product">
       <div class="product-image">
         <img class="w200" v-bind:src="image" alt="product image">
+        <button v-on:click="addToCart">Add to Cart</button>
       </div>
       <div class="product-info">
         <h1>{{ product }}  <span v-show="onSale">On SALE!!</span></h1>
@@ -28,18 +29,29 @@
         </ul>
 
         <p>Variants</p>
-        <div v-for="variant in variants" :key="variant.variantId">
-          <a href="#" target="_blank">{{ variant.variantColor }}</a>
+        <div class="boxContainer">
+          <div 
+            class="box variant" 
+            @mouseover="updateProduct(variant.variantImage)"
+            v-for="variant in variants" :key="variant.variantId"
+          >
+            {{ variant.variantColor }}
+          </div>
         </div>
 
         <p>Available Sizes</p>
-        <div class="sizeContainer" >
-          <div class="size" v-for="size in sizes">{{ size }}</div>
+        <div class="boxContainer" >
+          <div class="box" v-for="size in sizes">{{ size }}</div>
         </div>
 
         <div class="cartContainer">
-          <button v-on:click="addToCart">Add to Cart</button>
-          <div>cart: {{ cart }}</div>
+          <div class="boxContainer">
+            <div class="box cart">cart: {{ cart }}</div>
+            <div class="box amountButtons">
+              <button @click="addToCart">+</button>
+              <button v-on:click="removeFromCart" :disabled="cart <= 0">-</button>
+            </div>
+          </div>
         </div>
 
         
