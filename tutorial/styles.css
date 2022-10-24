@@ -5,3 +5,16 @@
 .w200{
   width: 200px;
 }
+
+.sizeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.size {
+  width: 30px;
+  border: dotted 0.1px gray;
+  text-align: center;
+  cursor: pointer;
+}
