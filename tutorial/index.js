@@ -13,14 +13,14 @@ var app = new Vue({
         variantColor: "green",
         variantImage: "./images/green_socks.png",
         variantInventory: 20,
-        onSale: true
+        variantOnSale: true
       },
       {
         variantId: 2235,
         variantColor: "blue",
         variantImage: "./images/blue_socks.png",
         variantInventory: 0,
-        onSale: false
+        variantOnSale: false
       }
     ],
     sizes: ["xs", "s", "m", "l", "xl", "xxl", "xxxl"],
@@ -62,7 +62,7 @@ var app = new Vue({
       return this.variants[this.selectedVariant].variantInventory
     },
     onSale() {
-      return this.variants[this.selectedVariant].variantInventory
+      return this.variants[this.selectedVariant].variantOnSale
     }
   }
 })
