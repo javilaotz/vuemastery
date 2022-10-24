@@ -10,54 +10,7 @@
 <body>
   <div class="nav-bar"></div>
   <div id="app">
-    <div class="product">
-      <div class="product-image">
-        <img class="w200" v-bind:src="image" alt="product image">
-        <div class="inventory">{{ inventory }} left</div>
-        <button v-on:click="addToCart">Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <h1>{{ title }}</h1>
-        <p>{{ description }}</p>
-
-        <p :class="styles.stockStatus " v-if="inventory > 10">In Stock</p>
-        <p v-else-if="inventory <=10 && inventory > 0" >Almost sold out!</p>
-        <p :class="[!inStock && styles.lineThrough]"> Out of Stock</p>
-
-        <p>Product details</p>
-        <ul>
-          <li v-for="detail in details">{{ detail }}</li>
-        </ul>
-
-        <p>Available Colors</p>
-        <div class="boxContainer">
-          <div 
-            class="box variant" 
-            v-for="(variant, index) in variants" :key="variant.variantId"
-            @mouseover="updateProduct(index)"
-            :style="{ backgroundColor: variant.variantColor }"
-          >
-          </div>
-        </div>
-
-        <p>Available Sizes</p>
-        <div class="boxContainer" >
-          <div class="box" v-for="size in sizes">{{ size }}</div>
-        </div>
-
-        <div class="cartContainer">
-          <div class="boxContainer">
-            <div class="box cart">cart: {{ cart }}</div>
-            <div class="box amountButtons">
-              <button @click="addToCart" :disabled="inventory === 0">+</button>
-              <button v-on:click="removeFromCart" :disabled="cart <= 0">-</button>
-            </div>
-          </div>
-        </div>
-
-        
-      </div>
-    </div>
+    <product></product>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js"></script>
   <script src="./index.js"></script>
