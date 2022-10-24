@@ -6,6 +6,9 @@
   display: flex;
   flex-direction: column;
 }
+.inventory {
+  text-align: center;
+}
 
 .w200{
   width: 200px;
@@ -26,6 +29,7 @@
 
 .variant {
   width: 100px;
+  height: 20px;
 }
 
 .cart {

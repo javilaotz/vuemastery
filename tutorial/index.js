@@ -5,7 +5,7 @@ var app = new Vue({
     description: 'Socks world of warcraft horde theme',
     image: './images/green_socks.png',
     link: 'http://google.com',
-    inventory: 100,
+    inventory: 10,
     onSale: true,
     details: ["80% cotton", "20% polyester", "Gender-neutral"],
     variants: [
@@ -25,10 +25,14 @@ var app = new Vue({
   },
   methods: {
     addToCart: function () {
-      this.cart += 1;
+      if(this.inventory > 0) {
+        this.cart += 1;
+        this.inventory -= 1;
+      }
     },
     removeFromCart: function () {
       this.cart -= 1;
+      this.inventory += 1;
     },
     updateProduct: function (image) {
       this.image = image;
