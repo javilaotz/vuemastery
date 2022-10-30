@@ -3,6 +3,10 @@ Vue.component('product', {
     premium: {
       type: Boolean,
       required: true
+    },
+    cart: {
+      type: Array,
+      reqired: true
     }
   },
   template: `
@@ -10,7 +14,7 @@ Vue.component('product', {
     <div class="product-image">
       <img class="w200" v-bind:src="image" alt="product image">
       <div class="inventory">{{ inventory }} left</div>
-      <button v-on:click="addToCart">Add to Cart</button>
+      <button v-on:click="updateCart">Add to Cart</button>
     </div>
     <div class="product-info">
       <h1>{{ title }}</h1>
@@ -42,10 +46,10 @@ Vue.component('product', {
 
       <div class="cartContainer">
         <div class="boxContainer">
-          <div class="box cart">cart: {{ cart }}</div>
+          <div class="box cart">cart: {{ cart.length }}</div>
           <div class="box amountButtons">
-            <button @click="addToCart" :disabled="inventory === 0">+</button>
-            <button v-on:click="removeFromCart" :disabled="cart <= 0">-</button>
+            <button @click="updateCart" :disabled="inventory === 0">+</button>
+            <button v-on:click="removeFromCart" :disabled="cart.length <= 0">-</button>
           </div>
         </div>
       </div>
@@ -77,7 +81,6 @@ Vue.component('product', {
         }
       ],
       sizes: ["xs", "s", "m", "l", "xl", "xxl", "xxxl"],
-      cart: 0,
       styles: {
         stockStatus: 'stockStatus',
         success: 'success',
@@ -85,22 +88,27 @@ Vue.component('product', {
         danger: 'danger',
         lineThrough: 'lineThrough'
       },
-      isPremium: true
     }
   },
   methods: {
-    addToCart: function () {
-      if(this.inventory > 0) {
-        this.cart += 1;
-        this.inventory.value -= 1;
-      }
-    },
     removeFromCart: function () {
-      this.cart -= 1;
-      this.inventory.value += 1;
+      this.$emit(
+        "add-to-cart", 
+        "remove", 
+        this.variants[this.selectedVariant].variantInventory, 
+        this.variants[this.selectedVariant].variantId
+      );
     },
     updateProduct: function (index) {
       this.selectedVariant = index;
+    },
+    updateCart() {
+      this.$emit(
+        "add-to-cart", 
+        "add", 
+        this.variants[this.selectedVariant].variantInventory, 
+        this.variants[this.selectedVariant].variantId
+      );
     }
   },
   computed: {
@@ -148,5 +156,23 @@ var app = new Vue({
   el: "#app",
   data: {
     premium: true,
-  }  
+    cart: []
+  },
+  methods: {
+    updateCart(option, inventory, id) {
+      switch(option) {
+        case "add":
+          this.cart.push(id)
+          inventory -= 1;
+          break;
+        case "remove":
+          const index = this.cart.indexOf(id);
+          if(index > -1) {
+            this.cart.splice(index, 1)
+            inventory += 1;
+          }
+          break;
+      }
+    }
+  }
 })
