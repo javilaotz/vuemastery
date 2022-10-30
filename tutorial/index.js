@@ -1,4 +1,10 @@
 Vue.component('product', {
+  props: {
+    premium: {
+      type: Boolean,
+      required: true
+    }
+  },
   template: `
   <div class="product">
     <div class="product-image">
@@ -114,7 +120,7 @@ Vue.component('product', {
       return this.variants[this.selectedVariant].variantOnSale
     },
     shipping() {
-      return this.isPremium ? "free" : "$2,99";
+      return this.premium ? "free" : "$2,99";
     }
   }
 
@@ -139,5 +145,8 @@ Vue.component('product-details', {
 })
 
 var app = new Vue({
-  el: "#app"  
+  el: "#app",
+  data: {
+    premium: true,
+  }  
 })
