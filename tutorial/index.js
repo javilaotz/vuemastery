@@ -53,6 +53,21 @@ Vue.component('product', {
           </div>
         </div>
       </div>
+      <br />
+      <div class="boxContainer">
+        <product-review @review-submitted="addReview"></product-review>
+        <div>
+          <p v-if="reviews.length === 0">There are no reviews yet</p>
+          <ul>
+            <li v-for="review in reviews">
+            <p>{{ review.name }}</p>
+            <p>Rating: {{ review.rating }}</p>
+            <p v-if="review.recommend">This user recommend this product</p>
+            <p>{{ review.review }}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
   `,
@@ -88,6 +103,7 @@ Vue.component('product', {
         danger: 'danger',
         lineThrough: 'lineThrough'
       },
+      reviews: []
     }
   },
   methods: {
@@ -109,6 +125,9 @@ Vue.component('product', {
         this.variants[this.selectedVariant].variantInventory, 
         this.variants[this.selectedVariant].variantId
       );
+    },
+    addReview(productReview) {
+      this.reviews.push(productReview)
     }
   },
   computed: {
@@ -134,6 +153,84 @@ Vue.component('product', {
 
 });
 
+Vue.component('product-review', {
+  template: `
+  <div>
+    <h3>Reviews</h3>
+    <form class="review-form" @submit.prevent="onSubmit">
+      <p>
+        <label for="name">Name:</label>
+        <input id="name" v-model="name" placeholder="name">
+      </p>
+      
+      <p>
+        <label for="review">Review:</label>      
+        <textarea id="review" v-model="review"></textarea>
+      </p>
+
+      <p>
+        <label for="recommend">Would you recommed this product?:</label>      
+        <input type="checkbox" id="recommend-yes" v-model="recommend"></textarea>
+      </p>
+      
+      <p>
+        <label for="rating">Rating:</label>
+        <select id="rating" v-model.number="rating">
+          <option>5</option>
+          <option>4</option>
+          <option>3</option>
+          <option>2</option>
+          <option>1</option>
+        </select>
+      </p>
+          
+      <p>
+        <input type="submit" value="Submit">  
+      </p>    
+
+      <p v-if="errors.length">
+        <b>Please correct the following error(s):</b>
+        <ul>
+          <li v-for="error in errors">{{ error }}</li>
+        </ul>
+      </p>
+
+    </form>
+  </div>
+  `,
+  data() {
+    return {
+      name: null,
+      review: "",
+      rating: "",
+      recommend: false,
+      errors: []
+    }
+  }, 
+  methods: {
+    onSubmit() {
+      if(this.name && this.review && this.rating ) {
+        let productReview = {
+          name: this.name,
+          review: this.review,
+          rating: this.rating,
+          recommend: this.recommend
+        }
+        this.$emit('review-submitted', productReview)
+        this.name = null
+        this.review = null
+        this.rating = null
+        this.recommend = null
+      } else {
+        if(!this.name) this.errors.push("Name required.")
+        if(!this.review) this.errors.push("Review required.")
+        if(!this.rating) this.errors.push("Rating required.")
+        if(!this.recommend) this.errors.push("Recommend required.")
+      }
+    }
+  }
+});
+
 Vue.component('product-details', {
   props:{
     details: {
@@ -148,9 +245,8 @@ Vue.component('product-details', {
         <li v-for="detail in details">{{ detail }}</li>
       </ul>
     </div>
-  `,
-
-})
+  `
+});
 
 var app = new Vue({
   el: "#app",
